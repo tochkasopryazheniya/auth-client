@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import './assets/styles/main.css';
+import './assets/styles/util.css';
+import RoutesComponent from "./components/RoutesComponent/RoutesComponent";
+import authStore from "./store/AuthStore";
+import {useEffect} from "react";
+import {observer} from "mobx-react-lite";
+
 
 function App() {
+    const {checkIsAuth, isLoading} = authStore
+
+    useEffect(() => {
+        if(localStorage.getItem('token')) {
+            checkIsAuth();
+        }
+    }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+        {isLoading ? (
+            <h1>Загрузка...</h1>
+        ) : <RoutesComponent/>}
+    </>
   );
 }
 
-export default App;
+export default observer(App);
