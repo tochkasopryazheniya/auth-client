@@ -68,8 +68,8 @@ class AuthStore {
 
     checkIsAuth = async () => {
         this.setIsLoading(true);
+        console.log(`${API_URL}/refresh`);
         try {
-            console.log(`${API_URL}/refresh`);
             const response = await axios.get(`${API_URL}/refresh`, {withCredentials: true});
             localStorage.setItem('token', response.data.accessToken);
             this.setUser(response.data.user);
